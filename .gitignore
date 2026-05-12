@@ -6,22 +6,42 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+backend.log
 
-node_modules
-dist
+# Entorno y secretos
+.env
+.env.*
+!.env.example
+
+# Dependencias
+node_modules/
+backend/node_modules/
+
+# Base de datos local (NO subir a producción)
+backend/data/*.db
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# Avatares subidos por usuarios
+backend/public/avatars/*
+!backend/public/avatars/.gitkeep
+
+# Vite build
+dist/
 dist-ssr
-*.local
 
-# Editor directories and files
-.vscode/*
+# Editor
+.vscode/
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 
-# Claude Code
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude
 .claude/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+CLAUDE.md
+
+# Scripts con credenciales por defecto (NO subir)
+create-admin.js

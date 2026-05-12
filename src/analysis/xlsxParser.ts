@@ -1,9 +1,14 @@
 import * as XLSX from 'xlsx';
 
-export async function parseXlsxToCanvas(file: File): Promise<HTMLCanvasElement[]> {
+export interface ParsedPage {
+  canvas: HTMLCanvasElement;
+  thumb: string;
+}
+
+export async function parseXlsxToCanvas(file: File): Promise<ParsedPage[]> {
   const arrayBuffer = await file.arrayBuffer();
   const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-  const canvases: HTMLCanvasElement[] = [];
+  const results: ParsedPage[] = [];
 
   for (const sheetName of workbook.SheetNames) {
     const sheet = workbook.Sheets[sheetName];
@@ -18,7 +23,8 @@ export async function parseXlsxToCanvas(file: File): Promise<HTMLCanvasElement[]
     await new Promise<void>((resolve) => {
       img.onload = () => {
         ctx.drawImage(img, 0, 0);
-        canvases.push(canvas);
+        const thumb = canvas.toDataURL('image/jpeg', 0.3);
+        results.push({ canvas, thumb });
         resolve();
       };
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1400">
@@ -30,5 +36,5 @@ export async function parseXlsxToCanvas(file: File): Promise<HTMLCanvasElement[]
     });
   }
 
-  return canvases;
+  return results;
 }

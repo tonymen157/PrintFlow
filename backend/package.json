@@ -1,0 +1,26 @@
+{
+  "name": "printflow-backend",
+  "version": "1.0.0",
+  "description": "Backend API for PrintFlow multi-user support",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "react-avatar-editor": "^15.1.0",
+    "react-easy-crop": "^5.5.7",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/react-easy-crop": "^1.16.0",
+    "nodemon": "^3.1.0"
+  }
+}

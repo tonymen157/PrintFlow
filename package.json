@@ -20,8 +20,11 @@
     "mammoth": "^1.12.0",
     "pdfjs-dist": "^5.7.284",
     "react": "^19.2.5",
+    "react-avatar-editor": "^15.1.0",
     "react-dom": "^19.2.5",
     "react-dropzone": "^15.0.0",
+    "react-easy-crop": "^5.5.7",
+    "react-router-dom": "^7.15.0",
     "tailwind-merge": "^3.5.0",
     "xlsx": "^0.18.5",
     "zustand": "^5.0.12"

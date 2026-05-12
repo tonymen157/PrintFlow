@@ -1,10 +1,10 @@
 import type { PageType } from '../pricing/types';
 
-const DEFAULT_THRESHOLDS = { colorLow: 25, colorMid: 50 };
+// Fixed thresholds: 0-25, 25-50, 50-75, 75-100
+const THRESHOLDS = { low: 25, mid: 50, high: 75 };
 
 export function analyzeColorCoverage(
-  canvas: HTMLCanvasElement,
-  thresholds = DEFAULT_THRESHOLDS
+  canvas: HTMLCanvasElement
 ): { coverage: number; type: PageType } {
   const ctx = canvas.getContext('2d');
   if (!ctx) return { coverage: 0, type: 'bw' };
@@ -33,8 +33,12 @@ export function analyzeColorCoverage(
   }
 
   const coverage = (coloredPixels / (totalPixels / step)) * 100;
-  const type: PageType =
-    coverage === 0 ? 'bw' : coverage <= thresholds.colorLow ? 'color-low' : coverage <= thresholds.colorMid ? 'color-mid' : 'color-high';
+  let type: PageType;
+  if (coverage === 0) type = 'bw';
+  else if (coverage <= THRESHOLDS.low) type = 'color-low';
+  else if (coverage <= THRESHOLDS.mid) type = 'color-mid';
+  else if (coverage <= THRESHOLDS.high) type = 'color-high';
+  else type = 'color-very-high';
 
   return { coverage, type };
 }

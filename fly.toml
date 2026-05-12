@@ -1,0 +1,23 @@
+# App name en Fly.io
+app = "printflow-app"
+primary_region = "mad"
+
+[build]
+  dockerfile = "Dockerfile"
+  # Pasar VITE_API_URL al build (para que Vite la embeba)
+  args = ["VITE_API_URL=/api"]
+
+[http_service]
+  internal_port = 80
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+# Volumen persistente para la BD SQLite
+[[mount]]
+  source = "printflow-data"
+  destination = "/backend/data"

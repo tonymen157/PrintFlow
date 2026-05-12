@@ -1,4 +1,6 @@
-export type PageType = 'bw' | 'color-low' | 'color-mid' | 'color-high';
+export type PageType = 'bw' | 'color-low' | 'color-mid' | 'color-high' | 'color-very-high';
+export type PrintType = 'bw' | 'color' | 'laser';
+export type PrintTech = 'standard' | 'laser';
 
 export interface PageAnalysis {
   pageNumber: number;
@@ -18,19 +20,42 @@ export interface FileAnalysis {
 }
 
 export interface PricingConfig {
-  thresholds: {
+  thresholds?: {
     colorLow: number;
     colorMid: number;
   };
-  prices: {
+  // Precios por tipo de trabajo
+  impresionPrices: {
     [paperSize: string]: {
-      [pageType in PageType]: {
-        single: number;
-        double: number;
-      };
+      [pageType in PageType]: number;
     };
   };
-  taxRate: number;
+  copiasPrices: {
+    [paperSize: string]: {
+      [pageType in PageType]: number;
+    };
+  };
+  libroPrices: {
+    [paperSize: string]: {
+      [pageType in PageType]: number;
+    };
+  };
+  // Precios laser (siempre mas caros)
+  impresionLaserPrices: {
+    [paperSize: string]: {
+      [pageType in PageType]: number;
+    };
+  };
+  copiasLaserPrices: {
+    [paperSize: string]: {
+      [pageType in PageType]: number;
+    };
+  };
+  libroLaserPrices: {
+    [paperSize: string]: {
+      [pageType in PageType]: number;
+    };
+  };
   currency: string;
 }
 
@@ -39,6 +64,8 @@ export interface QuoteLine {
   fileName: string;
   pageNumber: number;
   pageType: PageType;
+  workType: 'impresion' | 'copias' | 'libro';
+  printType: PrintType;
   unitPrice: number;
   subtotal: number;
 }
@@ -49,9 +76,7 @@ export interface QuoteResult {
   lines: QuoteLine[];
   copies: number;
   paperSize: string;
-  sides: 'single' | 'double';
   subtotal: number;
-  tax: number;
   total: number;
 }
 

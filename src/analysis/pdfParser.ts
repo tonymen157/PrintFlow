@@ -6,11 +6,16 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url
 ).toString();
 
-export async function parsePdfPages(file: File): Promise<HTMLCanvasElement[]> {
+export interface ParsedPage {
+  canvas: HTMLCanvasElement;
+  thumb: string; // data:image/jpeg;base64
+}
+
+export async function parsePdfPages(file: File): Promise<ParsedPage[]> {
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
   const numPages = pdf.numPages;
-  const canvases: HTMLCanvasElement[] = [];
+  const results: ParsedPage[] = [];
 
   for (let i = 1; i <= numPages; i++) {
     const page = await pdf.getPage(i);
@@ -18,9 +23,11 @@ export async function parsePdfPages(file: File): Promise<HTMLCanvasElement[]> {
     const canvas = document.createElement('canvas');
     canvas.width = viewport.width;
     canvas.height = viewport.height;
+    void canvas.getContext('2d');
     await page.render({ canvas, viewport }).promise;
-    canvases.push(canvas);
+    const thumb = canvas.toDataURL('image/jpeg', 0.3);
+    results.push({ canvas, thumb });
   }
 
-  return canvases;
+  return results;
 }
