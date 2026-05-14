@@ -20,5 +20,5 @@ primary_region = "mad"
 
 # Volumen persistente para la BD SQLite (formato estándar [[mounts]])
 [[mounts]]
-  source = "printflow-data"
+  source = "printflow_data"
   destination = "/backend/data"
