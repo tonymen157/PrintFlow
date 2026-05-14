@@ -20,20 +20,20 @@ RUN npm install --omit=dev
 COPY backend/ .
 
 # ===========================================
-# ETAPA 3: Imagen final (Nginx + Backend)
+# ETAPA 3: Imagen final (Node + Nginx)
 # ===========================================
-FROM nginx:1.27.1-alpine
+FROM node:22-alpine
+
+# Instalar nginx
+RUN apk add --no-cache nginx
 
 # Copiar frontend compilado
 COPY --from=frontend-builder /app/dist /usr/share/nginx/html
 
-# Copiar backend
+# Copiar backend completo (con node_modules)
 COPY --from=backend-builder /backend /backend
 
-# Data directories
-RUN mkdir -p /backend/data /backend/public/avatars
-
-# Config Nginx
+# Configurar Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /backend
