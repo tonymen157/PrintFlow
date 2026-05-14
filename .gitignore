@@ -44,4 +44,5 @@ Thumbs.db
 CLAUDE.md
 
 # Scripts con credenciales por defecto (NO subir)
-create-admin.js
+create-admin.*
+_create-admin.*
