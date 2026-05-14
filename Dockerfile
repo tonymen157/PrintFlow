@@ -6,7 +6,7 @@ ARG VITE_API_URL=/api
 ENV VITE_API_URL=$VITE_API_URL
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npm run build
 
@@ -16,7 +16,7 @@ RUN npm run build
 FROM node:22-alpine AS backend-builder
 WORKDIR /backend
 COPY backend/package.json backend/package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 COPY backend/ .
 
 # ===========================================
