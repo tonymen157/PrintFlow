@@ -1,5 +1,5 @@
 # App name en Fly.io
-app = "printflow-app"
+app = "printflow--tlhtg"
 primary_region = "mad"
 
 [build]
