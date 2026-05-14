@@ -34,7 +34,7 @@ app.use(helmet({
       scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "http://localhost:5173"],
+      connectSrc: ["'self'"],
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
@@ -63,6 +63,7 @@ const authLimiter = rateLimit({
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ====== DIRECTORIO DE AVATARES ======
 const AVATARS_DIR = path.join(__dirname, '../public/avatars');

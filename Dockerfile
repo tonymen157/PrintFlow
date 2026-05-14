@@ -18,6 +18,8 @@ WORKDIR /backend
 COPY backend/package.json backend/package-lock.json ./
 RUN npm install --omit=dev
 COPY backend/ .
+# NOTA: .env NO se copia a la imagen por seguridad
+# Los secretos se inyectan en Fly.io con: fly secrets set JWT_SECRET=<valor>
 
 # ===========================================
 # ETAPA 3: Imagen final (Node + Nginx)

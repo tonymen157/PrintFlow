@@ -1,0 +1,39 @@
+# Dependencias
+node_modules/
+backend/node_modules/
+
+# Build
+dist/
+dist-ssr
+
+# Entorno y secretos (NUNCA incluir en Docker)
+.env
+.env.*
+!.env.example
+
+# Base de datos
+backend/data/*.db
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# Logs
+*.log
+backend.log
+
+# Avatares
+backend/public/avatars/*
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Scripts locales
+create-admin.js
+
+# Claude
+.claude/
+CLAUDE.md
