@@ -1,7 +1,7 @@
 # ===========================================
 # ETAPA 1: Compilar el frontend con Vite
 # ===========================================
-FROM node:20-alpine AS frontend-builder
+FROM node:22-alpine AS frontend-builder
 ARG VITE_API_URL=/api
 ENV VITE_API_URL=$VITE_API_URL
 WORKDIR /app
@@ -13,7 +13,7 @@ RUN npm run build
 # ===========================================
 # ETAPA 2: Preparar el backend
 # ===========================================
-FROM node:20-alpine AS backend-builder
+FROM node:22-alpine AS backend-builder
 WORKDIR /backend
 COPY backend/package.json backend/package-lock.json ./
 RUN npm ci --omit=dev
@@ -22,7 +22,7 @@ COPY backend/ .
 # ===========================================
 # ETAPA 3: Imagen final (Nginx + Backend)
 # ===========================================
-FROM nginx:1.27-alpine
+FROM nginx:1.27.1-alpine
 
 # Copiar frontend compilado
 COPY --from=frontend-builder /app/dist /usr/share/nginx/html
