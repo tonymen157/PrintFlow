@@ -1,5 +1,11 @@
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '..', '..', '.env') });
+// Dotenv es opcional — en producción, Fly.io inyecta las variables como secrets
+try {
+  require('dotenv').config({ path: path.resolve(__dirname, '..', '..', '.env') });
+} catch {
+  // No hay .env disponible, las variables vendrán del entorno (Fly.io secrets)
+}
+
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
